@@ -1,23 +1,10 @@
 // 各種オーディオファイルを読み込む
 function loadAudioFile(url) {
-  var audioContext = new AudioContext();
-  var audioBuffer = audioContext.createBuffer(audioContext.sampleRate, audioContext.sampleRate / 44100 * 10, 2);
-  var audioFile = new AudioFileReader();
-  audioFile.addEventListener("load", function() {
-    audioBuffer.copyFromChannel(audioFile.getChannelData(0), 0, 0, audioBuffer.length);
-  });
-  audioFile.readAsArrayBuffer(new Request(url));
-  return audioBuffer;
-}
-
-// オーディオファイルを読み込む
-function loadAudioFile(url) {
   return fetch(url, {
     method: "POST",
   }).then(function(response) {
     return response.blob();
   });
-
 }
 
 // 音声データをMIDIデータに変換する
@@ -33,7 +20,45 @@ function convertAudioToMIDI(audioBuffer) {
   return midiData;
 }
 
-// プログラムの実行
-var audioBuffer = loadAudioFile("audio.wav");
-var midiData = convertAudioToMIDI(audioBuffer);
-console.log(midiData);
+// 進捗状況を表示する
+function showProgress(progress) {
+  document.getElementById("progress").innerHTML = progress + "%";
+}
+
+// 変換処理
+function convert() {
+  // 進捗状況を0に設定
+  document.getElementById("progress").innerHTML = "0%";
+
+  // オーディオファイルを読み込む
+  var audioBuffer = loadAudioFile(document.getElementById("audio-file").files[0]);
+
+  // 音声データをMIDIデータに変換する
+  var midiData = convertAudioToMIDI(audioBuffer);
+
+  // 進捗状況を100%に設定
+  document.getElementById("progress").innerHTML = "100%";
+
+  // 結果を表示する
+  document.getElementById("result").innerHTML = midiData;
+}
+
+// 保存処理
+function save() {
+  // 保存形式を選択する
+  var format = document.getElementById("format").value;
+
+  // 保存する
+  if (format == "audio") {
+    saveAsAudio();
+  } else {
+    saveAsMIDI();
+  }
+}
+
+// 変換ボタンをクリックしたときに実行する
+document.getElementById("submit").addEventListener("click", convert);
+
+// 保存ボタンをクリックしたときに実行する
+document.getElementById("save").addEventListener("click", save);
+

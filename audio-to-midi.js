@@ -10,6 +10,16 @@ function loadAudioFile(url) {
   return audioBuffer;
 }
 
+// オーディオファイルを読み込む
+function loadAudioFile(url) {
+  return fetch(url, {
+    method: "POST",
+  }).then(function(response) {
+    return response.blob();
+  });
+
+}
+
 // 音声データをMIDIデータに変換する
 function convertAudioToMIDI(audioBuffer) {
   var midiData = [];

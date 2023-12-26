@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>オーディオファイルをMIDIに変換</title>
+</head>
+<body>
+  <h1>オーディオファイルをMIDIに変換</h1>
+  <form action="" method="post">
+    <label for="audio-file">オーディオファイルを選択</label>
+    <input type="file" name="audio-file" id="audio-file">
+    <input type="submit" value="変換">
+  </form>
+  <div id="result"></div>
+</body>
+</html>

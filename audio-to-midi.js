@@ -24,6 +24,6 @@ function convertAudioToMIDI(audioBuffer) {
 }
 
 // プログラムの実行
-var audioBuffer = loadAudioFile("audio.wav");
+/*var audioBuffer = loadAudioFile("audio.wav");
 var midiData = convertAudioToMIDI(audioBuffer);
-console.log(midiData);
+console.log(midiData);*/
